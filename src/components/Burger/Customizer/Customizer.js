@@ -12,6 +12,7 @@ const controls = [
 const Customizer = (props) => (
   <>
     <div className={classes.Customizer}>
+      <p>Current Total Price: {props.price}</p>
       {controls.map(control => {
         return <BurgerControl
                 key={control.label}

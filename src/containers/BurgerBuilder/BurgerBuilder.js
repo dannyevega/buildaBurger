@@ -3,10 +3,10 @@ import Burger from '../../components/Burger/Burger';
 import Customizer from '../../components/Burger/Customizer/Customizer';
 
 const ingredientPrices = {
-  lettuce: '0.5',
-  meat: '2',
-  cheese: '0.9',
-  bacon: '1.5'
+  lettuce: 0.5,
+  meat: 2,
+  cheese: 0.9,
+  bacon: 1.5
 }
 
 class BurgerBuilder extends Component {
@@ -50,12 +50,12 @@ class BurgerBuilder extends Component {
   }
 
   render () {
-    const { ingredients } = this.state;
+    const { ingredients, totalPrice } = this.state;
     const disabledInfo = {...ingredients};
     for(let key in disabledInfo){
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
-    console.log(disabledInfo)
+    
     return (
       <>
         <Burger ingredients={ingredients}/>
@@ -63,6 +63,7 @@ class BurgerBuilder extends Component {
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.removeIngredientHandler}
           disabled={disabledInfo}
+          price={totalPrice}
         />
       </>
     )
