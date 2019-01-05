@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Burger from '../../components/Burger/Burger';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Customizer from '../../components/Burger/Customizer/Customizer';
 
 const ingredientPrices = {
@@ -17,8 +19,9 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
+    totalPrice: 5,
     purchasable: false,
-    totalPrice: 5
+    purchasing: false
   }
 
   updatePurchaseState = (ingredients) => {
@@ -28,6 +31,10 @@ class BurgerBuilder extends Component {
       return sum + el;
     }, 0);
     this.setState({ purchasable: sum > 0 });
+  }
+
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
   }
 
   addIngredientHandler = (type) => {
@@ -62,7 +69,7 @@ class BurgerBuilder extends Component {
   }
 
   render () {
-    const { ingredients, totalPrice, purchasable } = this.state;
+    const { ingredients, totalPrice, purchasable, purchasing } = this.state;
     const disabledInfo = {...ingredients};
     for(let key in disabledInfo){
       disabledInfo[key] = disabledInfo[key] <= 0;
@@ -70,12 +77,16 @@ class BurgerBuilder extends Component {
     
     return (
       <>
+        <Modal visible={purchasing}>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={ingredients}/>
         <Customizer 
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.removeIngredientHandler}
           disabled={disabledInfo}
           purchasable={purchasable}
+          ordered={this.purchaseHandler}
           price={totalPrice}
         />
       </>
