@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
+  // This should be a functional component, doesnt have to be a class - made class to demonstrate it doesnt need to re-render every time
   componentWillUpdate(){
     console.log('[Component OrderSummary ]')
   }
